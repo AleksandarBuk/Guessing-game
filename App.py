@@ -1,12 +1,18 @@
-from random import randint
+from random import randint, choice
 
+def clue(answer):
+    options = [answer - 1, answer +1]
+    return choice(options)
 
-def run_guess(guess, answer):
+def run_guess(guess, answer, attempts):
 
+    counter = attempts
     if 0 < guess < 11:
         if guess == answer:
             print('You got the correct answer in', attempts, 'attempts! You\'re a genius!')
             return True
+        elif counter == 2:
+            print(f'that\'s not the correct answer. Here\'s a clue: ', clue(answer))
     else:
         print('Please input a number that is 1~10')
         return False
@@ -20,7 +26,7 @@ if __name__ =='__main__':
             try:
                 guess = int(input('Please input a number 1~10: '))
                 attempts += 1
-                if run_guess(guess, answer):
+                if run_guess(guess, answer, attempts):
                     break
 
             except ValueError:
@@ -31,3 +37,5 @@ if __name__ =='__main__':
         if play_again_input.lower() != 'yes':
             print('Come back again! Bye!!!')
             play_again = False
+
+# add score tracker
