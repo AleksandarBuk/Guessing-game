@@ -1,11 +1,12 @@
 from random import randint, choice
+import click
 
 
 class Player:
 
     def __init__(self):
         self.name = None
-        # self.points = points
+        self.points = 0
 
     def name_get(self):
         self.name = input(f'Set your username: ')
@@ -13,25 +14,33 @@ class Player:
     def name_print(self):
         print(f'Username set to: ', self.name)
 
+    def congratulate(self):
+        print(f'Great job, {self.name}!')
+        self.points += 1
+
     # create name_display function
 
 
-def clue(answer):
-    options = [answer - 1, answer + 1]
+def clue(correct_answer):
+    options = [correct_answer - 1, correct_answer + 1]
     return choice(options)
 
 
-
-def run_guess(user_guess, correct_answer, attempt):
+# @click.command()
+# @click.option("--guess", prompt="Dare to guess?", help="Write a guess: ") # click interrupted code functionality
+def run_guess(guess, correct_answer, attempt):
     counter = attempt
-    if 0 < user_guess < 11:
-        if user_guess == correct_answer:
+    if 0 < guess < 11:
+        if guess == correct_answer:
             if attempt > 3:
                 print('You got the correct answer in', attempt, 'attempts! Well done!')
+                player.congratulate()
             elif attempt <= 2:
                 print('You got the correct answer in', attempt, 'attempts! You\'re a genius!')
+                player.congratulate()
             else:
                 print('You got the correct answer in', attempt, 'attempts! Well done!')
+                player.congratulate()
 
             return True
         elif counter == 2:
@@ -54,10 +63,10 @@ if __name__ == '__main__':
         while True:
             try:
                 guess = int(input('Please input a number 1~10: '))
-                attempts += 1
-                if run_guess(guess, answer, attempts): #error to fix
+                if run_guess(guess, answer, attempts):  # error to fix
                     break
 
+                attempts += 1
             except ValueError:
                 print('please enter a number')
                 continue
